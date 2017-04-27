@@ -5,7 +5,7 @@ let portmongDB = process.env.MONGODB_PORT || '27017';
 let moscaUser = process.env.MOSCA_USER || 'mosca';
 let moscaPass = process.env.MOSCA_PASS || 'moscaAWGES';
 let moscaID = process.env.MOSCA_ID || 'moscaAWGES';
-let moscaPortMQTT = process.env.MOSCA_PORT || 3881;
+let moscaPortMQTT = process.env.MOSCA_PORT || 8080;
 
 module.exports = {
   id: moscaID,

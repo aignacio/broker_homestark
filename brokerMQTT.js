@@ -1,5 +1,4 @@
 'use strict';
-
 let mosca = require('mosca');
 let config = require('./configBroker');
 let server = new mosca.Server(config);
@@ -15,7 +14,7 @@ let authenticate = function(client, username, password, callback) {
         authorized = true;
         console.log('[MQTT] Cliente ' + client.id + ' autorizado a conectar ao broker');
     } else {
-        if (username == 'aignacio' || username == 'interface' || username == 'tradutor') {
+        if (username == 'awges' && password == 'loginAWGES4321') {
             authorized = true;
             client.user = username;
             console.log('[MQTT] Cliente ADMIN autorizado a conectar ao broker');
@@ -28,14 +27,14 @@ let authenticate = function(client, username, password, callback) {
 };
 
 let authorizePublish = function(client, topic, payload, callback) {
-    if (client.user == 'interface' || client.user == 'aignacio' || client.user == 'tradutor')
+    if (client.user == 'awges')
         callback(null, true);
     else
         callback(null, client.id == topic.split('/')[1]);
 };
 
 let authorizeSubscribe = function(client, topic, callback) {
-    if (client.user == 'interface' || client.user == 'aignacio' || client.user == 'tradutor' || client.user == 'monitor_log')
+    if (client.user == 'awges')
         callback(null, true);
     else
         callback(null, client.id == topic.split('/')[1]);
@@ -49,5 +48,5 @@ server.on('ready', function() {
     server.authenticate = authenticate;
     server.authorizePublish = authorizePublish;
     server.authorizeSubscribe = authorizeSubscribe;
-    console.log('Mosca [MQTT] server is up and running on:'+config.port);
+    console.log('Mosca [MQTT] server is up and running on :'+config.port);
 });
