@@ -11,7 +11,7 @@ let portMQTT = 8080;
 let timePublicISIndividual = 1500; // Há DUAS limitações no Initial State, 25k publicações por mês e no máximo uma req. por segundo da API, logo iremos publicar 14 mensagens intervaladas de 1.5 segundos a cada 24 minutos, somando um total de 25.200,00 mensagens por mês aproximadamente
 let timePublicIS = 1000 * 60 * 25;
 let IS = require('initial-state');
-let bucket = IS.bucket('Salas Limpas ITT Chip', 'sOcQGOGPVfYoUIghEs8t8M57KMLVHqEb');
+let bucket = IS.bucket('Salas Limpas - ITT Chip', 'UBqUyD0bzJ3dyCbetn6xwIpoVjsjmn4U');
 let sensores6LoWPAN = [];
 let sensorsLength = 0;
 let sensorType = 2;
@@ -34,7 +34,7 @@ function publicIndividualIS() {
       // console.log('Sensor:['+sensorsLength+'] '+sensores6LoWPAN[sensorsLength]);
       let temp = (Number(String(sensores6LoWPAN[sensorsLength].temp).split('C')[0]) / 100 + 2.1).toFixed(2);
       temp = String(temp) + ' C';
-      bucket.push(sensores6LoWPAN[sensorsLength].id, temp);
+      bucket.push('Temp.-'+sensores6LoWPAN[sensorsLength].id, temp);
       setTimeout(publicIndividualIS, timePublicISIndividual);
       console.log('Enviando ao initial-state os dados: ['+sensores6LoWPAN[sensorsLength].id+'] - '+temp);
     }
@@ -50,7 +50,7 @@ function publicIndividualIS() {
     if (sensorsLength >= 0) {
       // console.log('Sensor:['+sensorsLength+'] '+sensores6LoWPAN[sensorsLength]);
       let bat = sensores6LoWPAN[sensorsLength].bat;
-      bucket.push(sensores6LoWPAN[sensorsLength].id, bat);
+      bucket.push('Bat.-'+sensores6LoWPAN[sensorsLength].id, bat);
       setTimeout(publicIndividualIS, timePublicISIndividual);
       console.log('Enviando ao initial-state os dados: ['+sensores6LoWPAN[sensorsLength].id+'] - '+bat);
     }
