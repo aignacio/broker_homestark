@@ -34,7 +34,7 @@ let authorizePublish = function(client, topic, payload, callback) {
 };
 
 let authorizeSubscribe = function(client, topic, callback) {
-    if (client.user == 'awges')
+    if (client.user == 'awges' || client.user == 'awges_sniffer' )
         callback(null, true);
     else
         callback(null, client.id == topic.split('/')[1]);
@@ -48,5 +48,5 @@ server.on('ready', function() {
     server.authenticate = authenticate;
     server.authorizePublish = authorizePublish;
     server.authorizeSubscribe = authorizeSubscribe;
-    console.log('Mosca [MQTT] server is up and running on :'+config.port);
+    console.log('Mosca [MQTT] server is up and running on:'+config.port);
 });

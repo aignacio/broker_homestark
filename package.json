@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.4.0",
+    "getmac": "^1.2.1",
     "md5": "^2.2.1",
     "mosca": "^2.3.0",
     "mqtt": "^2.6.2"
