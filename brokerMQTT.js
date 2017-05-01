@@ -34,7 +34,7 @@ let authorizePublish = function(client, topic, payload, callback) {
 };
 
 let authorizeSubscribe = function(client, topic, callback) {
-    if (client.user == 'awges' || client.user == 'awges_sniffer' )
+    if (client.user == 'awges' || client.user == 'awges_sniffer')
         callback(null, true);
     else
         callback(null, client.id == topic.split('/')[1]);

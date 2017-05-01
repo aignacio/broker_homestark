@@ -1,7 +1,6 @@
 'use strict';
 let mqtt = require('mqtt');
 let md5 = require('md5');
-// let async = require('async');
 let unique = require('getmac');
 let mqttClient;
 let mqtt_server = 'iot.awges.com';
@@ -9,6 +8,8 @@ let mac = 'undefined';
 let connected = false;
 let pass_secure = '';
 let portMQTT = 8080;
+
+
 
 unique.getMac(function(err, mac_addr) {
   if (err)
@@ -18,9 +19,13 @@ unique.getMac(function(err, mac_addr) {
 
   mqttClient = mqtt.connect('mqtt://' + mqtt_server, {
     clientId: mac,
-    username: 'rpi_' + mac,
+    username: 'awges_sniffer',
     password: pass_secure,
     port: portMQTT
+  });
+
+  mqttClient.on('message', function(topic, message) {
+    console.log('[MQTT] Tópico:' + topic + '\n[MQTT] Mensagem:' + message);
   });
 
   mqttClient.on('connect', function() {
@@ -28,9 +33,5 @@ unique.getMac(function(err, mac_addr) {
     mqttClient.subscribe('#');
     mqttClient.publish('/' + mac + '/info', 'Publicador de sniffer no initial state ok!');
     connected = true;
-  });
-
-  mqttClient.on('message', function(topic, message) {
-    console.log('[MQTT] Tópico:' + topic + '\n[MQTT] Mensagem:' + message);
   });
 });
